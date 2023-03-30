@@ -11,9 +11,11 @@ def hello():
     return "wow!!"
 
 
-@app.route('/analysis')
+@app.route('/analysis', methods=['POST'])
 def analysisEmotion():
-    sentence = request.args.get("s")
+    res = request.get_json()
+    sentence = res['text']
+    print(sentence)
     if sentence is None or len(sentence) == 0:
         return jsonify({
             "joy": 0,
