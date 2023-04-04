@@ -8,12 +8,15 @@ Emotion = Emotion()
 ''' Main page '''
 @app.route('/')
 def hello():
-    return "wow!!"
+    return "HELLO!!"
 
 
-@app.route('/analysis')
+@app.route('/analysis', methods=['GET','POST'])
 def analysisEmotion():
-    sentence = request.args.get("s")
+    res = request.get_json()
+    sentence = res['text']
+    print(sentence)
+
     if sentence is None or len(sentence) == 0:
         return jsonify({
             "joy": 0,
