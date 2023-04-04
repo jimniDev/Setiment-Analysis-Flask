@@ -1,0 +1,62 @@
+from __future__ import print_function
+import base64
+import json
+import requests
+
+# Workaround to support both python 2 & 3
+try:
+    import urllib.request, urllib.error
+    import urllib.parse as urllibparse
+except ImportError:
+    import urllib as urllibparse
+
+
+'''
+    --------------------- HOW THIS FILE IS ORGANIZED --------------------
+    0. SPOTIFY BASE URL
+    1. SEARCH : https://developer.spotify.com/documentation/web-api/reference/search
+    2. TRACK: https://developer.spotify.com/documentation/web-api/reference/get-track
+    3. RECOMMENDATIONS: https://developer.spotify.com/documentation/web-api/reference/get-recommendations
+'''
+
+# ----------------- 0. SPOTIFY BASE URL ----------------
+
+SPOTIFY_API_BASE_URL = 'https://api.spotify.com'
+API_VERSION = "v1"
+SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
+
+# ------------------ 1. SEARCH ------------------------
+#  https://developer.spotify.com/documentation/web-api/reference/search
+
+SEARCH_ENDPOINT = "{}/{}".format(SPOTIFY_API_URL, 'search')
+
+def search(search_types, name):
+    for st in search_types:
+        if st not in ['artist', 'track', 'album', 'playlist']:
+            print('%s invalid type' % st)
+            return None
+    myparams = {'type': search_types}
+    myparams['q'] = name
+    resp = requests.get(SEARCH_ENDPOINT, params=myparams)
+    return resp.json()
+
+# ------------------ 2. TRACK ------------------------
+GET_TRACK_ENDPOINT = "{}/{}".format(SPOTIFY_API_URL, 'tracks')  # /<id>
+
+# https://developer.spotify.com/documentation/web-api/reference/get-track
+def get_track(track_id):
+    url = "{}/{id}".format(GET_TRACK_ENDPOINT, id=track_id)
+    resp = requests.get(url)
+    return resp.json()
+
+GET_TRACK_AUDIO_FEATURE_ENDPOINT = "{}/{}".format(SPOTIFY_API_URL, 'audio-features')  # /<id>
+
+# https://developer.spotify.com/documentation/web-api/reference/get-track
+def get_track_audio_feature(track_id):
+    url = "{}/{id}".format(GET_TRACK_AUDIO_FEATURE_ENDPOINT, id=track_id)
+    resp = requests.get(url)
+    return resp.json()
+
+
+# ------------------ 3. RECOMMENDATIONS ------------------------
+#  https://developer.spotify.com/documentation/web-api/reference/get-recommendations
