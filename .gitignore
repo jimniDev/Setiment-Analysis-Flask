@@ -1,0 +1,7 @@
+__pycache__/
+/venv3.8
+/__pycache__
+
+
+*.pt
+*.pyc
