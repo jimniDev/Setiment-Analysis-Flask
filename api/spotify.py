@@ -11,7 +11,17 @@ except ImportError:
     import urllib as urllibparse
 
 
+
+
+# results = sp.search(q='weezer', limit=20)
+# for idx, track in enumerate(results['tracks']['items']):
+#     print(idx, track['name'])
+
 '''
+
+    This code was based on
+    https://github.com/hereismari/spotify-flask
+
     --------------------- HOW THIS FILE IS ORGANIZED --------------------
     0. SPOTIFY BASE URL
     1. SEARCH : https://developer.spotify.com/documentation/web-api/reference/search
@@ -30,20 +40,18 @@ SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
 
 SEARCH_ENDPOINT = "{}/{}".format(SPOTIFY_API_URL, 'search')
 
-def search(search_types, name):
-    for st in search_types:
-        if st not in ['artist', 'track', 'album', 'playlist']:
-            print('%s invalid type' % st)
-            return None
-    myparams = {'type': search_types}
-    myparams['q'] = name
+def search(track, artist):
+    myparams = {'limit': 1}
+    myparams['type'] = 'track'
+    myparams['q'] = 'track:{track} artist:{artist}'
     resp = requests.get(SEARCH_ENDPOINT, params=myparams)
     return resp.json()
 
 # ------------------ 2. TRACK ------------------------
+# https://developer.spotify.com/documentation/web-api/reference/get-track
+
 GET_TRACK_ENDPOINT = "{}/{}".format(SPOTIFY_API_URL, 'tracks')  # /<id>
 
-# https://developer.spotify.com/documentation/web-api/reference/get-track
 def get_track(track_id):
     url = "{}/{id}".format(GET_TRACK_ENDPOINT, id=track_id)
     resp = requests.get(url)
@@ -60,3 +68,15 @@ def get_track_audio_feature(track_id):
 
 # ------------------ 3. RECOMMENDATIONS ------------------------
 #  https://developer.spotify.com/documentation/web-api/reference/get-recommendations
+
+RECOMMENDATIONS_ENDPOINT = "{}/{}".format(SPOTIFY_API_URL, 'search')
+
+# seed_artists, seed_genres, seed_tracks(Spotify ID)
+def get_recommendations(seed_artists, seed_genres, seed_tracks):
+
+    myparams = {'limit': 5}
+    myparams['seed_artists'] = seed_artists
+    myparams['seed_genres'] = seed_genres
+    myparams['seed_tracks'] = seed_tracks
+    resp = requests.get(RECOMMENDATIONS_ENDPOINT, myparams)
+    return resp.json()

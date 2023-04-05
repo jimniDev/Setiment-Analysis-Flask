@@ -2,6 +2,7 @@ __pycache__/
 /venv3.8
 /__pycache__
 
-
+util/spotiy_auth.py
+.cache
 *.pt
 *.pyc
