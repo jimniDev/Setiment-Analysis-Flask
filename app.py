@@ -40,10 +40,10 @@ def analysisEmotion():
             "sadness": 0,
             "anger": 0,
             "hurt": 0,
-            "top": {
-                "num": '',
-                "val": '',
-            }
+            # "top": {
+            #     "num": '',
+            #     "val": '',
+            # }
         })
 
     probability, top = inference.predict(sentence)
@@ -54,10 +54,10 @@ def analysisEmotion():
         "sadness": probability[Emotion.SADNESS],
         "anger": probability[Emotion.ANGER],
         "hurt": probability[Emotion.HURT],
-        "top": {
-            "num": top,
-            "val": Emotion.to_string(top),
-        }
+        # "top": {
+        #     "num": top,
+        #     "val": Emotion.to_string(top),
+        # }
     })
 
 ''' Spotify'''
@@ -73,7 +73,8 @@ def search():
     pprint.pprint(res)
     if len(items) == 0:
         return jsonify({
-            'res': 'No Matching Result'
+            'message': 'NO RESULT',
+            'result': ''
             })
     else:
         # pprint.pprint(items[0]['album']['name'])
@@ -84,12 +85,16 @@ def search():
         # pprint.pprint(items[0]['preview_url'])
 
         return jsonify({
-            'album': items[0]['album']['name'],
-            'imgs': items[0]['album']['images'],
-            'artist': items[0]['artists'][0]['name'],
-            'spotify_id': items[0]['id'],
-            'name': items[0]['name'],
-            'preview': items[0]['preview_url'],
+            'message': 'SUCCESS',
+            'result': {
+                'album': items[0]['album']['name'],
+                'imgs': items[0]['album']['images'],
+                'artist': items[0]['artists'][0]['name'],
+                'spotify_id': items[0]['id'],
+                'name': items[0]['name'],
+                'preview': items[0]['preview_url']  
+            }
+
         })
 
 
