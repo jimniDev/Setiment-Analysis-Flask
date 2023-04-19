@@ -18,7 +18,8 @@ sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 
 
-''' Main page '''
+''' =================== Main page =================== '''
+
 @app.route('/')
 def hello():
     return "Flask Connected"
@@ -60,43 +61,44 @@ def analysisEmotion():
         # }
     })
 
-''' Spotify'''
+''' =================== Spotify =================== '''
+
 @app.route('/search', methods=['GET'])
 def search():
     track = request.args.get('track', type = str)
     artist = request.args.get('artist', type = str)
-    q = 'track:'+ track +' artist:'+ artist
 
-    # q = 'track:'+'dna'+' artist:'+'BTS'
+    q = 'track:'+ track +' artist:'+ artist
     res = sp.search(q=q, limit=1, type='track')
+
     items = res['tracks']['items']
-    pprint.pprint(res)
+    # pprint.pprint(res)
+
     if len(items) == 0:
         return jsonify({
             'message': 'NO RESULT',
             'result': ''
             })
     else:
-        # pprint.pprint(items[0]['album']['name'])
-        # pprint.pprint(items[0]['album']['images'])
-        # pprint.pprint(items[0]['artists'][0]['name'])
-        # pprint.pprint(items[0]['id'])
-        # pprint.pprint(items[0]['name'])
-        # pprint.pprint(items[0]['preview_url'])
-
         return jsonify({
             'message': 'SUCCESS',
             'result': {
-                'album': items[0]['album']['name'],
-                'imgs': items[0]['album']['images'],
-                'artist': items[0]['artists'][0]['name'],
-                'spotify_id': items[0]['id'],
+                'album': {
+                    'name': items[0]['album']['name'],
+                    'id': items[0]['album']['id'],
+                    'imgs': items[0]['album']['images'],
+                },
+                'artist': {
+                    'name': items[0]['artists'][0]['name'],
+                    'id': items[0]['artists'][0]['id'],
+                },
+                'id': items[0]['id'],
                 'name': items[0]['name'],
                 'preview': items[0]['preview_url']  
             }
-
         })
 
+pprint.pprint(sp.recommendation_genre_seeds())
 
 if __name__ == "__main__": 
     app.run(host='0.0.0.0', port='5001', debug=True)
