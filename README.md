@@ -38,27 +38,17 @@ The frontend counterpart (https://github.com/jimniDev/Setiment-Analysis-Music), 
 
 ## Project Structure
 ```
-sentiment-analysis-backend/
-├── app/
-│   ├── __init__.py           # Initializes the Flask app and extensions
-│   ├── routes/
-│   │   ├── auth_routes.py    # Routes for Spotify authentication
-│   │   ├── analysis_routes.py # Routes for sentiment analysis
-│   │   ├── recommendation_routes.py # Routes for music recommendations
-│   └── utils/
-│       ├── auth.py           # Spotify authentication utilities
-│       ├── spotify.py        # Spotify API interaction functions
-│       ├── emotion_model.py  # Pretrained BERT model wrapper
-│       └── preprocess.py     # Diary text preprocessing logic
-├── static/
-│   ├── templates/            # HTML templates for OAuth callback
-│   └── assets/               # Static assets for Flask
-├── tests/
-│   ├── test_analysis.py      # Unit tests for sentiment analysis
-│   ├── test_recommendation.py # Unit tests for music recommendation
-│   └── test_auth.py          # Unit tests for authentication
-├── .env.example              # Environment variable template
-├── app.py                    # Flask application entry point
+Setiment-Analysis-Flask/
+├── api/
+│   └──  spotify.py            # Spotify API interaction function
+├── model/
+│   └── setiment_analysis_inference.py  # Emotion classification and inference logic
+├── template/
+│   ├── input.html          # HTML templates for test
+│   └── output.html         # HTML templates for test
+├── util
+│   └── emotion.py          # emotion class
+├── app.py                    # Flask application (Spotify authentication, API, endpoints)
 ├── requirements.txt          # Python dependencies
 └── README.md                 # Project documentation
 ```
