@@ -124,6 +124,50 @@ Setiment-Analysis-Flask/
 
 ---
 
+## API Endpoints
+
+### 1. **Emotion Analysis**
+- **Endpoint**: `/analysis`
+- **Method**: `POST`
+- **Description**: Accepts a diary text input and returns emotion probabilities.
+- **Request Body**:
+  ```json
+  {
+    "text": "오늘 기분이 정말 좋아요!" // Today i'm feeling so great!
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "joy": 0.95,
+    "calm": 0.02,
+    "surprise": 0.01,
+    "sadness": 0.01,
+    "anger": 0.00,
+    "hurt": 0.01
+  }
+  ```
+
+### 2. **Music Recommendation**
+- **Endpoint**: `/recommendation`
+- **Method**: `GET`
+- **Description**: Fetches recommended tracks based on emotional parameters.
+- **Query Parameters**:
+  - `joy`, `calm`, `sadness`, `anger`, `surprise`, `hurt` (probability values).
+- **Response**:
+  ```json
+  [
+    {
+      "track_name": "Happy Song",
+      "artist": "Joyful Artist",
+      "url": "https://open.spotify.com/track/example"
+    },
+    ...
+  ]
+  ```
+
+---
+
 ## Setup Instructions
 1. Clone the repository:
    ```bash
