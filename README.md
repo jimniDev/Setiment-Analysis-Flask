@@ -8,7 +8,7 @@ KoBERT Setiment Analysis Model Serving on Flask
 This repository contains the backend implementation for the **Sentiment Analysis Music Recommendation Service**, a personalized web service that analyzes emotional states based on user-submitted Korean diary entries and provides tailored music recommendations via Spotify. The service leverages natural language processing (NLP) techniques and Spotify's API to deliver an engaging and emotionally resonant experience.
 
 This backend is built using Flask and integrates:
-- A **Korean Multi-Emotion Classification Model** powered by BERT for emotion analysis.
+- A **Korean Multi-Emotion Classification Model** powered by BERT for emotion analysis. (https://github.com/jimniDev/KoBERT_Sentiment_Analysis/tree/main)
 - **Spotify API** for music recommendation based on detected emotions.
 
 The frontend counterpart (https://github.com/jimniDev/Setiment-Analysis-Music), implemented in React, handles the user interface, enabling users to input diaries, view analysis results, and explore music recommendations seamlessly.
